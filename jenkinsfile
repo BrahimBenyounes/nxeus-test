@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone') {
+            steps {
+                // Use the correct repository URL and specify credentials if necessary
+                git credentialsId: 'your_credentials_id', url: 'https://github.com/BrahimBenyounes/nxeus-test.git'
+                // Or for SSH
+                // git credentialsId: 'your_credentials_id', url: 'git@github.com:BrahimBenyounes/nxeus-test.git'
+                
+                sh "ls -ll"
+            }
+        }
+        stage('Test and compile') {
+            steps {
+                echo "*****************Cleaning...."
+                sh "mvn clean"
+                echo "*****************Completed clean"
+                
+                sh "mvn compile"
+                echo "*****************Finish Compiling"
+                echo '*****************Run unit tests'
+                sh "mvn package"
+                echo '*****************Package finished'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "*****************Start deploy"
+                sh "mvn -Dmaven.test.skip=true -Dmaven.main.skip=true deploy"
+            }
+        }
+    }
+}
