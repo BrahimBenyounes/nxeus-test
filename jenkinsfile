@@ -3,16 +3,29 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-           
+              //  git credentialsId: 'git_vsvdev', url: 'git@github.com:VSVDEv/model.git'
+             // git branch: 'main', url: 'https://github.com/VSVDEv/model.git'
              git 'https://github.com/BrahimBenyounes/nxeus-test.git'
                 sh "ls -ll"
             }
         }
-       
+        stage('Test and compile') {
+            steps {
+               echo "*****************Cleaning...."
+               sh "mvn clean"
+               echo "*****************Completed clean"
+               
+               sh "mvn compile"
+               echo "*****************Finish Compiling"
+	           echo '*****************Run unit tests'
+	           sh "mvn package"
+               echo '*****************Package finished'
+            }
+        }
         stage('Deploy') {
             steps {
                echo "*****************Start deploy"
-               sh "mvn deploy"
+               sh "mvn -Dmaven.test.skip=true -Dmaven.main.skip=true deploy"
             }
         }
     }
