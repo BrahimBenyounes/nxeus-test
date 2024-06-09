@@ -1,16 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Clone') {
-            steps {
-                // Use the correct repository URL and specify credentials if necessary
-                git credentialsId: 'your_credentials_id', url: 'https://github.com/BrahimBenyounes/nxeus-test.git'
-                // Or for SSH
-                // git credentialsId: 'your_credentials_id', url: 'git@github.com:BrahimBenyounes/nxeus-test.git'
-                
-                sh "ls -ll"
-            }
-        }
+ 
         stage('Test and compile') {
             steps {
                 echo "*****************Cleaning...."
