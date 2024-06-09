@@ -1,24 +1,18 @@
 pipeline {
     agent any
     stages {
- 
-        stage('Test and compile') {
+        stage('Clone') {
             steps {
-                echo "*****************Cleaning...."
-                sh "mvn clean"
-                echo "*****************Completed clean"
-                
-                sh "mvn compile"
-                echo "*****************Finish Compiling"
-                echo '*****************Run unit tests'
-                sh "mvn package"
-                echo '*****************Package finished'
+           
+             git 'https://github.com/BrahimBenyounes/nxeus-test.git'
+                sh "ls -ll"
             }
         }
+       
         stage('Deploy') {
             steps {
-                echo "*****************Start deploy"
-                sh "mvn -Dmaven.test.skip=true -Dmaven.main.skip=true deploy"
+               echo "*****************Start deploy"
+               sh "mvn deploy"
             }
         }
     }
