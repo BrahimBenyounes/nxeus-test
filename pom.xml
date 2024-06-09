@@ -95,7 +95,7 @@
     <repository>
       <id>nexus</id>
       <name>Releases</name>
-      <url>http://100.0.0.16:8081/repository/sv/</url>
+      <url>http://192.168.186.129/:8081/repository/sv/</url>
     </repository>
   </distributionManagement>
 </project>
